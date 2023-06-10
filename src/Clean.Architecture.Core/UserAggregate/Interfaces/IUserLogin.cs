@@ -8,6 +8,6 @@ using Ardalis.Result;
 namespace Clean.Architecture.Core.UserAggregate.Interfaces;
 public interface IUserLogin
 {
-  public Task<Result<ClientUser>> CheckUserNameAndPassWordLogin(string UserName, string PassWord);
-  
+  public Task<Result<bool>> IsUserSignedUp(Int32 nationalId, string password);
+
 }

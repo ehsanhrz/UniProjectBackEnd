@@ -14,11 +14,9 @@ public class ClientUserConfiguration : IEntityTypeConfiguration<ClientUser>
   {
     builder.ToTable(nameof(ClientUser));
 
-    builder.HasKey(p => p.Id);
+    builder.HasIndex(p => p.NationalID).IsUnique();
 
-    builder.Property(p => p.UserName)
-      .HasMaxLength(128)
-      .IsRequired();
+    builder.HasKey(p => p.Id);
 
     builder.Property<string>(p => p.Password).IsRequired();
 
@@ -28,13 +26,7 @@ public class ClientUserConfiguration : IEntityTypeConfiguration<ClientUser>
 
     builder.Property<string>(p => p.Email);
 
-    builder.Property<string>(p => p.PhoneNumber).HasMaxLength(12);
-
-    builder.Property<bool>(p => p.PhoneNumberVerfied).HasDefaultValue(false);
-
-    builder.Property<string>(p => p.Name).HasMaxLength(120);
-
-    builder.Property<bool>(p => p.TwoStepLogin).HasDefaultValue(false);
+    builder.Property<Int32>(p => p.NationalID).IsRequired();
 
   }
 }

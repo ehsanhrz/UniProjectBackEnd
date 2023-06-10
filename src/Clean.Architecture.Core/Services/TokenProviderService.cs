@@ -1,18 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
+﻿using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
-using System.Security.Principal;
 using System.Text;
-using System.Threading.Tasks;
 using Ardalis.Result;
 using Clean.Architecture.Core.Interfaces;
 using Clean.Architecture.Core.Options;
 using Clean.Architecture.Core.UserAggregate;
-using Clean.Architecture.Core.UserAggregate.Interfaces;
 using Microsoft.Extensions.Options;
-//using Microsoft.IdentityModel.JsonWebTokens;
 using Microsoft.IdentityModel.Tokens;
 
 namespace Clean.Architecture.Core.Services;
@@ -28,7 +21,7 @@ public class TokenProviderService : ITokenProvider
     var claims = new Claim[]
     {
       new Claim("Id",user.Id.ToString()),
-      new Claim(JwtRegisteredClaimNames.Name, user.UserName),
+      new Claim(JwtRegisteredClaimNames.Name, user.Email),
       new Claim(JwtRegisteredClaimNames.Iss, _options.Value.Issuer),
       new Claim(JwtRegisteredClaimNames.Aud, _options.Value.Aduincerr)
     };

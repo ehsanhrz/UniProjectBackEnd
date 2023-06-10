@@ -21,4 +21,9 @@
     <ProjectReference Include="..\Clean.Architecture.SharedKernel\Clean.Architecture.SharedKernel.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="UserAggregate\Events\" />
+    <Folder Include="UserAggregate\Handlers\" />
+  </ItemGroup>
+
 </Project>

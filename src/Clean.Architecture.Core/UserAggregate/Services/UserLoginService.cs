@@ -16,19 +16,9 @@ public class UserLoginService : IUserLogin
   {
     _repository = repository;
   }
-  public async Task<Result<ClientUser>> CheckUserNameAndPassWordLogin(string userName, string passWord)
+
+  public Task<Result<bool>> IsUserSignedUp(int nationalId, string password)
   {
-    var checkSpec = new CheckUserNameAndPassWordLogin(userName, passWord);
-
-    var result = await _repository.FirstOrDefaultAsync(checkSpec);
-
-    if (result == null)
-    {
-      return Result.Error("username or password is incorrect");
-    }
-    else
-    {
-      return Result.Success(result);
-    }
+    throw new NotImplementedException();
   }
 }

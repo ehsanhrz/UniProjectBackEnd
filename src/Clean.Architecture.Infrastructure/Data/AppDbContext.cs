@@ -1,5 +1,4 @@
 ﻿using System.Reflection;
-using Clean.Architecture.Core.ToDoAggregate;
 using Clean.Architecture.Core.UserAggregate;
 using Clean.Architecture.SharedKernel;
 using Clean.Architecture.SharedKernel.Interfaces;
@@ -18,10 +17,6 @@ public class AppDbContext : DbContext
     _dispatcher = dispatcher;
   } 
   public DbSet<ClientUser> clientUsers => Set<ClientUser>();
-
-  public DbSet<PhoneValidation> phoneValidations => Set<PhoneValidation>();
-
-  public DbSet<ToDo> toDos => Set<ToDo>();
 
   protected override void OnModelCreating(ModelBuilder modelBuilder)
   {
