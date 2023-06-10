@@ -1,5 +1,6 @@
 ﻿using Ardalis.Result;
 using Clean.Architecture.Core.UserAggregate.Interfaces;
+using Clean.Architecture.Core.UserAggregate.Specifications;
 using Clean.Architecture.SharedKernel.Interfaces;
 using MediatR;
 
@@ -17,14 +18,53 @@ public class UserSignupService : IUserSignup
     }
 
 
-    public Task<Result<ClientUser>> CreateUser(string nationalId, string passWord, string email)
+    public async Task<Result<ClientUser>> CreateUser(Int32 nationalId, string passWord, string email)
     {
-      throw new NotImplementedException();
+      try
+      {
+        var newUser = new ClientUser(nationalId, passWord, email);
+        var result = await _clientUserRepository.AddAsync(newUser);
+        var operationResult = await _clientUserRepository.SaveChangesAsync();
+        if (operationResult > 0)
+        {
+          return Result.Success(result);
+        }
+
+        return Result.Error("Something Wrong in DB");
+      }
+      catch (Exception error)
+      {
+        return Result.Error(error.Message);
+      }
+
     }
 
-    public Task<Result> CheckUniqueEmail(string email)
+    public async Task<Result<bool>> CheckUniqueNationalId(int nationalId)
     {
-      throw new NotImplementedException();
+      var nationalIdSpec = new CheckUniqueNationalId(nationalId);
+
+      var searchResult = await _clientUserRepository.FirstOrDefaultAsync(nationalIdSpec);
+
+      if (searchResult != null)
+      {
+        return Result.Error("This National Id Already Exists");
+      }
+
+      return Result.Success();
+    }
+
+    public async Task<Result> CheckUniqueEmail(string email)
+    {
+      var emailSpec = new CheckUniqueEmail(email);
+
+      var searchResult = await _clientUserRepository.FirstOrDefaultAsync(emailSpec);
+
+      if (searchResult != null)
+      {
+        return Result.Error("This Email Already Exists");
+      }
+
+      return Result.Success();
     }
 
     public Task<Result> FireEmailVerficationCodeSender(ClientUser user)

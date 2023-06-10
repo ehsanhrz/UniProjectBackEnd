@@ -4,7 +4,9 @@ namespace Clean.Architecture.Core.UserAggregate.Interfaces;
 public interface IUserSignup
 {
   
-    public Task<Result<ClientUser>> CreateUser(string nationalId, string passWord, string email);
+    public Task<Result<ClientUser>> CreateUser(Int32 nationalId, string passWord, string email);
+
+    public Task<Result<bool>> CheckUniqueNationalId(Int32 nationalId);
 
     public Task<Result> CheckUniqueEmail(string email);
 

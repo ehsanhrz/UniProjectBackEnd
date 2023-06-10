@@ -11,14 +11,22 @@ using Clean.Architecture.SharedKernel.Interfaces;
 namespace Clean.Architecture.Core.UserAggregate.Services;
 public class UserLoginService : IUserLogin
 {
-  private IRepository<ClientUser> _repository;
+  private readonly IRepository<ClientUser> _repository;
   public UserLoginService(IRepository<ClientUser> repository)
   {
     _repository = repository;
   }
 
-  public Task<Result<bool>> IsUserSignedUp(int nationalId, string password)
+  public async Task<Result<bool>> IsUserSignedUp(int nationalId, string password)
   {
-    throw new NotImplementedException();
+    var isUserSignedUpSpec = new IsUserSignedUp(nationalId, password);
+    var checkResult = await _repository.FirstOrDefaultAsync(isUserSignedUpSpec);
+    if (checkResult == null)
+    {
+      Result.Success(false);
+    }
+
+    return Result.Success(true);
   }
+  
 }
